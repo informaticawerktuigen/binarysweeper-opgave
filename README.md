@@ -102,6 +102,12 @@ Gebruik onderstaand commando voor deze installatie:
 sudo apt install libncurses-dev
 ```
 
+Installeer ook `pkg-config` om het project correct te kunnen builden:
+
+```bash
+sudo apt install pkg-config
+```
+
 > :information_source: Dit installatiecommando zorgt ervoor dat de header-file `ncurses.h` toegevoegd wordt aan je `/usr/include` folder.
 Daarnaast wordt de `ncurses`-library toegevoegd aan je `/usr/lib` folder, zodat deze statisch of dynamisch gelinkt kan worden aan je programma. Op deze manier kan je dus C-libraries installeren in Ubuntu.
 
