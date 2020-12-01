@@ -32,6 +32,10 @@
     - [Voorkennis](#voorkennis-2)
     - [Oefening](#oefening-2)
     - [Tips](#tips-1)
+  - [Oefening 4](#oefening-4)
+    - [Voorkennis](#voorkennis-3)
+    - [Opgave](#opgave)
+    - [Hints](#hints)
 
 ## GitHub classroom
 
@@ -365,6 +369,36 @@ $ ./binarysweeper-cli
 
 * Indien bovenstaand commando errors geeft, *lees de errors* en probeer ze te begrijpen. Dit kunnen bijvoorbeeld compiler errors zijn (fout geschreven code) of linker errors (ontbrekende functies of functiedeclaraties).
 * Gebruik het forum indien je een error message niet begrijpt. Post enkel de error message, niet je code.
+
+### Oefening 4
+
+#### Voorkennis
+
+* [Les 1: Pure C][les1]
+* [Les 2: C Build Tools][les2]
+* [Les 3: Bits & bytes][les3]
+* [Les 4: Afgeleide datatypes][les4]
+
+#### Opgave
+
+In `include/state.h` kan je de definitie van de `struct game_state` terugvinden.
+
+* Voeg de functies `is_victory(struct game_state state)` en `is_loss(struct game_state state)` toe aan `binary.c`.
+
+Deze functies moeten `0` (false) of `1` (true) returnen.
+Gebruik de meegegeven `struct game_state` om te bepalen of een spelstate al dan niet gewonnen/verloren is.
+
+Een spelstate wordt beschouwd als *verloren* indien het `visibility_board` ervoor zorgt dat een mijn van het `mine_board` zichtbaar is.
+
+Een spelstate wordt beschouwd als *gewonnen* indien alle cellen zichtbaar zijn in het `visibility_board` *behalve* de cellen die een mijn bevatten.
+
+Gebruik *binaire operatoren* om beide functies te implementeren. Je mag *geen* lussen gebruiken.
+
+#### Hints
+
+* Merk op dat `is_victory(state)` niet hetzelfde is als `!is_loss(state)`!
+* Het `flag_board` is irrelevant om te bepalen of een spel al dan niet gewonnen is.
+* Combineer het `mine_board` en het `visibility_board` met binaire operatoren. Denk na over de betekenis van elke operator op deze borden.
 
 [les1]: https://github.com/informaticawerktuigen/oefenzitting-c#les-1-pure-c]
 [les2]: https://github.com/informaticawerktuigen/oefenzitting-c/tree/main/les2-c-build-tools
