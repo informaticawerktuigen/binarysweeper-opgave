@@ -349,7 +349,7 @@ Deze functie moet:
 
 * `row` en `col` omzetten naar een bit-index met de functie uit `oefening 2`. Hierbij is het *niet* de bedoeling dat je de functie copy-paste naar `binary.c`. Gebruik header files! 
 * Met behulp van binaire operaties achterhalen of een bepaald coördinaat op het spelbord al dan niet een vlag bevat. Gebruik hiervoor uiteraard ook de bit-index die je berekent hebt.
-* De returnwaarde van de functie moet 0 zijn indien er geen vlag staat en 1 indien er geen vlag staat.
+* De returnwaarde van de functie moet 0 zijn indien er geen vlag staat en 1 indien er wel een vlag staat.
 
 #### Tips
 
