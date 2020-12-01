@@ -28,6 +28,10 @@
   - [Oefening 2](#oefening-2)
     - [Voorkennis](#voorkennis-1)
     - [Oefening](#oefening-1)
+  - [Oefening 3](#oefening-3)
+    - [Voorkennis](#voorkennis-2)
+    - [Oefening](#oefening-2)
+    - [Tips](#tips-1)
 
 ## GitHub classroom
 
@@ -38,7 +42,6 @@ Je kan een repository aanmaken met behulp van deze link: https://classroom.githu
 ## Afspraken
 
 Overloop eerst de afspraken vooraleer je begint aan de opgave.
-
 
 ### Gedragscode
 
@@ -327,5 +330,43 @@ Deze representatie is beschreven in de sectie interne representatie van dit docu
 
 De functie zet dus coördinaten om in bit indices.
 
+### Oefening 3
+
+#### Voorkennis
+
+* [Les 1: Pure C][les1]
+* [Les 2: C Build Tools][les2]
+* [Les 3: Bits & bytes][les3]
+
+#### Oefening
+
+* Maak een bestand `binary.c` in de folder `src/api`.
+* Schrijf een functie `int is_flag_at_coordinates(uint64_t board, int row, int col)` in dit C-bestand.
+
+Het inputargument `board` is een 64-bit getal.
+
+Deze functie moet:
+
+* `row` en `col` omzetten naar een bit-index met de functie uit `oefening 2`. Hierbij is het *niet* de bedoeling dat je de functie copy-paste naar `binary.c`. Gebruik header files! 
+* Met behulp van binaire operaties achterhalen of een bepaald coördinaat op het spelbord al dan niet een vlag bevat. Gebruik hiervoor uiteraard ook de bit-index die je berekent hebt.
+* De returnwaarde van de functie moet 0 zijn indien er geen vlag staat en 1 indien er geen vlag staat.
+
+#### Tips
+
+* Maak gebruik van een mask. Indien je een mask wilt opstellen van het type `uint64_t`, doe dit als volgt: `uint64_t mask = 1ull << idx`. Indien je gewoon `1` zou gebruiken, wordt dit opgevat als een signed int en is het mogelijk dat het resultaat van je bit shift undefined is.  Met `1ull` zorg je ervoor dat het resultaat van je expressie een `unsigned long long` is die gegarandeed minstens `64-bit` zal bevatten.
+* Je kan je functie testen door hem op te roepen vanuit main (`api/api.c`). Geef bijvoorbeeld het bord mee dat je hebt opgesteld hebt in oefening 1.
+* De `Makefile` zal elk van je `.c` bestanden compileren en de resulterende `.o` bestanden automatisch linken. Hiervoor moet je gewoon het commando `make` uitvoeren in de root folder van je repo. De binary binarysweeper-api is het resultaat van dat linkcommando. Als je deze uitvoert wordt de main-functie in `api/api.c` uitgevoerd:
+  
+```bash
+$ cd binarysweeper-NaamStudent
+$ make
+$ ./binarysweeper-cli
+```
+
+* Indien bovenstaand commando errors geeft, *lees de errors* en probeer ze te begrijpen. Dit kunnen bijvoorbeeld compiler errors zijn (fout geschreven code) of linker errors (ontbrekende functies of functiedeclaraties).
+* Gebruik het forum indien je een error message niet begrijpt. Post enkel de error message, niet je code.
+
 [les1]: https://github.com/informaticawerktuigen/oefenzitting-c#les-1-pure-c]
 [les2]: https://github.com/informaticawerktuigen/oefenzitting-c/tree/main/les2-c-build-tools
+[les3]: https://github.com/informaticawerktuigen/oefenzitting-c/tree/main/les3-bits-and-bytes
+[les4]: https://github.com/informaticawerktuigen/oefenzitting-c/tree/main/les4-afgeleide-datatypes
