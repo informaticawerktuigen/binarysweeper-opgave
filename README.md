@@ -396,7 +396,7 @@ Gebruik *binaire operatoren* om beide functies te implementeren. Je mag *geen* l
 
 #### Hints
 
-* Merk op dat `is_victory(state)` niet hetzelfde is als `!is_loss(state)`!
+* Merk op dat `is_victory(state)` niet hetzelfde is als `!is_loss(state)`
 * Het `flag_board` is irrelevant om te bepalen of een spel al dan niet gewonnen is.
 * Combineer het `mine_board` en het `visibility_board` met binaire operatoren. Denk na over de betekenis van elke operator op deze borden.
 
