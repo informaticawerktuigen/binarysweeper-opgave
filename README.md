@@ -36,6 +36,10 @@
     - [Voorkennis](#voorkennis-3)
     - [Opgave](#opgave)
     - [Hints](#hints)
+  - [Oefening 5](#oefening-5)
+    - [Voorkennis](#voorkennis-4)
+    - [Oefening](#oefening-3)
+    - [Hints](#hints-1)
 
 ## GitHub classroom
 
@@ -118,6 +122,7 @@ $ cd repository
 $ make
 $ ./binarysweeper-cli
 ```
+
 > :information_source: Het commando `make` gebruikt een `Makefile`-script om alle build-commando's automatisch uit te voeren. Een toekomstige les zal hier dieper op ingaan. De commando's die uitgevoerd worden, zullen geprint worden naar de console. Deze zou je na les 2 moeten kunnen begrijpen (met uitzondering van enkele flags).
 
 ## Structuur
@@ -406,7 +411,48 @@ Gebruik *binaire operatoren* om beide functies te implementeren. Je mag *geen* l
 * Het `flag_board` is irrelevant om te bepalen of een spel al dan niet gewonnen is.
 * Combineer het `mine_board` en het `visibility_board` met binaire operatoren. Denk na over de betekenis van elke operator op deze borden.
 
-[les1]: https://github.com/informaticawerktuigen/oefenzitting-c#les-1-pure-c]
+### Oefening 5
+
+#### Voorkennis
+
+* [Les 1: Pure C][les1]
+* [Les 2: C Build Tools][les2]
+* [Les 3: Bits & bytes][les3]
+* [Les 4: Afgeleide datatypes][les4]
+* [Les 5: Scopes and lifetimes][les5]
+
+#### Oefening
+
+In `include/game.h` kan je een interface vinden waarmee je een spel BinarySweeper kan starten en spelen.
+
+* Maak een bestand `autoplay.c`.
+* Schijf in dit bestand een functie `void play_custom_game()`.
+
+Deze functie moet de BinarySweeper interface gebruiken om een spel met vaste seed te spelen van start tot overwinning.
+Kies zelf een seed naar keuze voor je implementatie.
+Je mag deze hard-coden in je functie.
+
+> :information_source: Onze BinarySweeper implementatie genereert willekeurige borden met behulp van een Pseudo Random Number Generator (PRNG). De getallen die gegenereerd worden zijn niet echt willekeurig, maar worden gegenereerd door een mathematische functie. Afhankelijk van de `seed` (zaadje) dat je meegeeft aan deze functie, zal een volledig andere reeks "willekeurige" getallen gegenereerd worden. Elke `seed` zal dus een uniek spelbord genereren. [Meer info](https://stats.stackexchange.com/questions/354373/what-exactly-is-a-seed-in-a-random-number-generator)
+
+De functie moet:
+
+* De starting state printen.
+* De state printen na elke uitgevoerde zet op het spelbord.
+* Het eindbord printen.
+
+Wanneer je de functie oproept zou dus het volledige spelverloop moeten geprint worden naar de console.
+
+#### Hints
+
+* Je kan gebruik maken van de functie `print_game_state` in `include/state.h` om een state van een spel te printen.
+* De code in `cli/cli.c` gebruikt ook de interface in `include/game.h`. Indien je twijfelt hoe een functie gebruikt moet worden, kan je een kijkje nemen in deze code voor inspiratie. Als het dan nog steeds onduidelijk is, vraag gerust op het forum.
+* Indien je veel zetten nodig hebt zal de output van je programma lang zijn. Je kan het programma uitvoeren en pipen naar `less` om er gemakkelijk door te scrollen: `./binarysweeper-api | less`
+* Vergeet niet om `delete_game` op te roepen wanneer je klaar bent met het spel.
+* BinarySweeper gebruikt intern een *linked list* van *struct history_elements*. Elk history element bevat 1 state. Dit biedt ons de mogelijkheid undo en redo-functionaliteit te implementeren.
+
+[les1]: https://github.com/informaticawerktuigen/oefenzitting-c/tree/main/les1-purec
 [les2]: https://github.com/informaticawerktuigen/oefenzitting-c/tree/main/les2-c-build-tools
 [les3]: https://github.com/informaticawerktuigen/oefenzitting-c/tree/main/les3-bits-and-bytes
 [les4]: https://github.com/informaticawerktuigen/oefenzitting-c/tree/main/les4-afgeleide-datatypes
+[les5]: https://github.com/informaticawerktuigen/oefenzitting-c/tree/main/les5-scopes-and-lifetimes
+[les6]: https://github.com/informaticawerktuigen/oefenzitting-c/tree/main/les6-dynamische-structuren
