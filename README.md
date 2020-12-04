@@ -40,6 +40,10 @@
     - [Voorkennis](#voorkennis-4)
     - [Oefening](#oefening-3)
     - [Hints](#hints-1)
+  - [Oefening 6](#oefening-6)
+    - [Voorkennis](#voorkennis-5)
+    - [Opgave](#opgave-1)
+    - [Hints](#hints-2)
 
 ## GitHub classroom
 
@@ -448,7 +452,36 @@ Wanneer je de functie oproept zou dus het volledige spelverloop moeten geprint w
 * De code in `cli/cli.c` gebruikt ook de interface in `include/game.h`. Indien je twijfelt hoe een functie gebruikt moet worden, kan je een kijkje nemen in deze code voor inspiratie. Als het dan nog steeds onduidelijk is, vraag gerust op het forum.
 * Indien je veel zetten nodig hebt zal de output van je programma lang zijn. Je kan het programma uitvoeren en pipen naar `less` om er gemakkelijk door te scrollen: `./binarysweeper-api | less`
 * Vergeet niet om `delete_game` op te roepen wanneer je klaar bent met het spel.
-* BinarySweeper gebruikt intern een *linked list* van *struct history_elements*. Elk history element bevat 1 state. Dit biedt ons de mogelijkheid undo en redo-functionaliteit te implementeren.
+
+### Oefening 6
+
+#### Voorkennis
+
+* [Les 1: Pure C][les1]
+* [Les 2: C Build Tools][les2]
+* [Les 3: Bits & bytes][les3]
+* [Les 4: Afgeleide datatypes][les4]
+* [Les 5: Scopes and lifetimes][les5]
+* [Les 6: Dynamische structuren][les6]
+
+#### Opgave
+
+Voeg en functie `struct game *solve_seed(unsigned seed)` toe aan `autoplay.c`.
+Deze functie krijgt als input een `seed`, en zal vervolgens automatisch het spel met deze seed oplossen.
+Maak opnieuw gebruik van de interface in `include/game.h`.
+
+* Het is *niet* verplicht om de kortst mogelijke oplossing te vinden.
+* Je auto-solver *mag* gebruik maken van de `undo`-functionaliteit.
+
+Voeg vervolgens een functie `void print_full_game(struct game *game)` toe aan `util.c`.
+
+* Deze functie neemt als invoer een spel en zal elke state in de *history* van dit spel printen naar de console.
+
+Gebruik `print_full_game` met het resultaat van `solve_seed` om het resultaat van je auto-solver te printen.
+
+#### Hints
+
+* BinarySweeper gebruikt intern een [*doubly linked list*](https://en.wikipedia.org/wiki/Doubly_linked_list) van `struct history_element`s. Elk history element bevat 1 state. Dit biedt ons de mogelijkheid undo en redo-functionaliteit te implementeren.
 
 [les1]: https://github.com/informaticawerktuigen/oefenzitting-c/tree/main/les1-purec
 [les2]: https://github.com/informaticawerktuigen/oefenzitting-c/tree/main/les2-c-build-tools
