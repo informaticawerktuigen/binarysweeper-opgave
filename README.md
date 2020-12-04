@@ -375,7 +375,7 @@ Deze functie moet:
 ```bash
 $ cd binarysweeper-NaamStudent
 $ make
-$ ./binarysweeper-cli
+$ ./binarysweeper-api
 ```
 
 * Indien bovenstaand commando errors geeft, *lees de errors* en probeer ze te begrijpen. Dit kunnen bijvoorbeeld compiler errors zijn (fout geschreven code) of linker errors (ontbrekende functies of functiedeclaraties).
