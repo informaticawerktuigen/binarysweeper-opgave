@@ -446,7 +446,7 @@ De functie moet:
 
 Wanneer je de functie oproept zou dus het volledige spelverloop moeten geprint worden naar de console.
 
-> :warning: Het is niet de bedoeling dat je user input vraagt om het spel te spelen. Je functie moet volledig zelfstandig alle zetten uitvoeren om de seed correct op te lossen.
+> :warning: Het is niet de bedoeling dat je user input vraagt om het spel te spelen. Je functie moet volledig zelfstandig alle zetten uitvoeren om het spel correct op te lossen.
 
 #### Hints
 
