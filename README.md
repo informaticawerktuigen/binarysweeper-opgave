@@ -601,7 +601,7 @@ $ wget -N https://raw.githubusercontent.com/informaticawerktuigen/binarysweeper-
 > :information_source: GitHub classroom laat het helaas niet toe om rechtstreeks updates te pushen naar jullie repository, vandaar dat we de nieuwe cli.c op deze manier moeten doorgeven. Dat is zeker niet hoe het normaal zou horen met `git`.
 
 De nieuwe `cli` laat je toe om een bestand mee te geven als argument van het programma.
-De `cli` zal dit aannemen dat dit bestand een geldig spel voorstelt en dit vervolgens als spel tonen:
+De `cli` zal aannemen dat dit bestand een geldig spel voorstelt en dit vervolgens als spel tonen:
 
 ```bash
 $ make
