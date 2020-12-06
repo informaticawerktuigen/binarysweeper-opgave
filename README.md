@@ -44,6 +44,12 @@
     - [Voorkennis](#voorkennis-5)
     - [Opgave](#opgave-1)
     - [Hints](#hints-2)
+  - [Oefening 7](#oefening-7)
+    - [Voorkennis](#voorkennis-6)
+    - [Opgave](#opgave-2)
+    - [Voorbeeld](#voorbeeld)
+    - [Hulp](#hulp)
+    - [Hints](#hints-3)
 
 ## GitHub classroom
 
@@ -489,9 +495,152 @@ Gebruik `print_full_game` met het resultaat van `solve_seed` om het resultaat va
 
 * BinarySweeper gebruikt intern een [*doubly linked list*](https://en.wikipedia.org/wiki/Doubly_linked_list) van `struct history_element`s. Elk history element bevat 1 state. Dit biedt ons de mogelijkheid undo en redo-functionaliteit te implementeren.
 
+
+### Oefening 7
+
+#### Voorkennis
+
+* [Les 1: Pure C][les1]
+* [Les 2: C Build Tools][les2]
+* [Les 3: Bits & bytes][les3]
+* [Les 4: Afgeleide datatypes][les4]
+* [Les 5: Scopes and lifetimes][les5]
+* [Les 6: Dynamische structuren][les6]
+* [Les 7: System interaction][les7]
+
+#### Opgave
+
+Voor de laatste en meest complexe oefening van dit project zullen jullie een save-functie moeten schrijven voor BinarySweeper.
+
+Maak een bestand `api/save.c` aan. Schrijf in dit bestand de functie `int save_game(struct game *game, const char *filename)`.
+
+* De parameter `game` is een pointer naar een BinarySweeper spel. Het spel kan zich in eender welke toestand bevinden: net begonnen, verloren, gewonnen, ... .
+* De parameter `filename` is de naam van een bestand
+
+De functie moet een bestand aanmaken met naam `filename`.
+Naar dit bestand moet elke state van het BinarySweeper spel geschreven worden.
+Dit moet in volgorde gebeuren, startend bij de allereerste state in de history en eindigend met de allerlaatste state.
+
+Een state moet naar een bestand geschreven worden als volgt:
+
+* Schrijf eerst het mijnenbord naar het bestand
+* Schrijf vervolgens het vlaggenbord naar het bestand
+* Schrijf ten slotte het zichtbaarheidsbord naar het bestand
+
+Elk van deze borden zijn `uint64_t` getallen.
+Het is de bedoeling dat deze getallen rechtstreeks geschreven worden volgens hun interne, binaire representatie.
+Het is dus niet de bedoeling dat ze eerst worden omgezet naar strings en vervolgens in een leesbaar formaat in het bestand geschreven worden.
+Wanneer je het bash-commando `file` uitvoert op je outputbestand, willen we geen `ASCII` file te zien krijgen, wel gewoon `data`.
+
+#### Voorbeeld
+
+Stel dat we een spel hebben met een spelbord met exact 1 bom op positie (0, 0).
+Het spel is net gestart, en de speler heeft geklikt op (0, 0).
+De speler is verloren.
+Op dat moment hebben we een `game` met twee states in de history van het spel.
+
+De eerste state bevat een mijnenbord met hexadecimale waarde `0x1`, en een vlaggenbord en zichtbaarheidsbord met beide de hexadecimale waarde `0x0`.
+De tweede state bevat een mijnenbord met hexadecimale waarde `0x1`, een vlaggenbord met hexadecimale waarde `0x0` en een zichtbaarheidsbord met hexadecimale waarde `0x1`.
+
+Indien we dit spel saven, krijgen we een bestand van `aantal_states * 3 * 8` bytes groot, dus exact 48 bytes groot.
+
+* Bytes 0 - 7 stellen het mijnenbord voor van state 0, dus `0x1`
+* Bytes 8 - 15 stellen het vlaggenbord voor van state 0, dus `0x0`
+* Bytes 16 - 23 stellen het zichtbaarheidsbord voor van state 0, dus `0x0`
+* Bytes 24 - 31 stellen het mijnenbord voor van state 1, dus `0x1`
+* Bytes 32 - 39 stellen het vlaggenbord voor van state 1, dus `0x0`
+* Bytes 40 - 47 stellen het zichtbaarheidsbord voor van state 1, dus `0x1`
+
+#### Hulp
+
+Onderstaande code maakt een bestand aan dat het voorbeeldspel dat we zonet beschreven hebben voorstelt:
+
+```C
+#include <stdio.h>
+#include <stdint.h>
+
+int main(void)
+{
+
+    uint64_t example_game[] = {0x1ull, 0x0ull, 0x0ull, 0x1ull, 0x0ull, 0x1ull};
+
+    FILE *file = fopen("example_game", "wb");
+    if (file == NULL)
+    {
+        return -1;
+    }
+
+    if (fwrite(example_game, sizeof(example_game), 1, file) != 1)
+    {
+        return -1;
+    }
+    fclose(file);
+    return 0;
+}
+```
+
+Indien je deze code compileert en uitvoert krijg je een bestand genaamd `example_game`, dat exact 48 bytes groot is.
+Dit kan je nakijken met `ls -a`.
+
+Je kan de inhoud van dit bestand inspecteren met `hd -v`:
+
+```bash
+$ hd -v example_game
+00000000  01 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00  |................|
+00000010  00 00 00 00 00 00 00 00  01 00 00 00 00 00 00 00  |................|
+00000020  00 00 00 00 00 00 00 00  01 00 00 00 00 00 00 00  |................|
+00000030
+```
+
+Om het eenvoudiger te maken om jullie oplossing na te kijken, hebben we een nieuwe versie van `cli.c` online gezet, in de repository van deze opgave. Deze nieuwe versie kan je downloaden met onderstaande commando's:
+
+```bash
+$ cd src/cli
+$ wget -N https://raw.githubusercontent.com/informaticawerktuigen/binarysweeper-opgave/main/cli.c
+```
+> :information_source: GitHub classroom laat het helaas niet toe om rechtstreeks updates te pushen naar jullie repository, vandaar dat we de nieuwe cli.c op deze manier moeten doorgeven. Dat is zeker niet hoe het normaal zou horen met `git`.
+
+De nieuwe `cli` laat je toe om een bestand mee te geven als argument van het programma.
+De `cli` zal dit aannemen dat dit bestand een geldig spel voorstelt en dit vervolgens als spel tonen:
+
+```bash
+$ make
+$ ./binarysweeper-cli example_game
+```
+Indien je dus de `example_game` file aanmaakt met de code die we hierboven meegaven, zou je het spel moeten zien dat we in het voorbeeld beschreven hebben.
+
+Ten slotte hebben we nog een uitgebreidere save-file meegegeven: we hebben de seed `344372342` manueel opgelost en deze oplossing bewaard.
+Je kan dit gehele spel bekijken door het bestand `playthrough_344372342` te laden:
+
+```bash
+$ wget https://github.com/informaticawerktuigen/binarysweeper-opgave/raw/main/playthrough_344372342
+$ ./binarysweeper-cli playthrough_344372342
+```
+
+Met undo kan je het gehele spel terugspoelen naar de initiële state.
+
+> :information_source: Merk op dat de seed telkens als 0 wordt weergegeven. Dit doen we omdat we de seed niet bewaren in een bestand en dus onmogelijk kunnen achterhalen op basis van een save file.
+
+> :information_source: Het kan interessant zijn om eens willekeurige bestanden (geen save files) mee te geven aan de `cli`.
+> Aangezien we op geen enkele manier controleren of de bestanden wel geldige spellen voorstellen, zal onze `cli` de files toch interpreteren als binarysweeper spellen. Kan je de vreemde spellen die je te zien krijgt verklaren? Dit is nog maar eens een voorbeeld dat de manier waarop je data interpreteert bepaald wat de betekenis is van deze data.
+
+> :information_source: Misschien is het je opgevallen dat de bytes van elke `uint64_t` van rechts naar links geschreven worden naar het bestand.
+> Het getal `0x1` als 64-bit getal wordt `01 00 00 00 00 00 00 00` wanneer we het byte per byte naar een bestand schrijven.
+> Dit heeft te maken met de [endianness](https://en.wikipedia.org/wiki/Endianness) van de onderliggende processor.
+> De meeste populaire processorarchitecturen gebruiken de `little endian byte order`, waarbij bytes bewaard worden in de volgorde least significant naar most significant.
+> Indien je een BinarySweeper save file zou laden op een machine met `big endian byte order` zou het plots een ander spel tonen (horizontaal gespiegeld, de bytes zullen in andere volgordes zitten en elke byte stelt een rij voor).
+> We zouden die inconsistentie kunnen vermijden door byte per byte te schrijven en te laden, maar dat zou ons voor deze opgave te ver leiden.
+
+#### Hints
+
+* Zorg ervoor dat je `fwrite` goed begrijpt (`man fwrite`). Probeer niet gewoon de code van hierboven te copy-pasten. Jullie code zal geen array schrijven naar een bestand.
+* Het is mogelijk om een struct in één enkele schrijfoperatie naar een bestand te schrijven. Voor structs met padding kan dit er echter toe leiden dat de padding ook in het bestand terecht komt. Indien je verschillende compilers zou gebruiken met verschillende paddings, kan het zijn dat je save-file plots niet meer werkt. Gebruik daarom drie schrijfoperaties per state, één schrijfoperatie per bord.
+* Zorg ervoor dat je het save-file formaat goed begrijpt. Inspecteer de meegegeven save files `example_game` en `playthrough_344372342` met `hd -v` (hexdump) en probeer te begrijpen wat de verschillende bytes betekenen. Kan je een manier bedenken om het formaat te verkleinen (minder bytes per spel)?
+
 [les1]: https://github.com/informaticawerktuigen/oefenzitting-c/tree/main/les1-purec
 [les2]: https://github.com/informaticawerktuigen/oefenzitting-c/tree/main/les2-c-build-tools
 [les3]: https://github.com/informaticawerktuigen/oefenzitting-c/tree/main/les3-bits-and-bytes
 [les4]: https://github.com/informaticawerktuigen/oefenzitting-c/tree/main/les4-afgeleide-datatypes
 [les5]: https://github.com/informaticawerktuigen/oefenzitting-c/tree/main/les5-scopes-and-lifetimes
 [les6]: https://github.com/informaticawerktuigen/oefenzitting-c/tree/main/les6-dynamische-structuren
+[les7]: https://github.com/informaticawerktuigen/oefenzitting-c/tree/main/les7-system-interaction
