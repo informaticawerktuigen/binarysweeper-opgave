@@ -481,6 +481,10 @@ Voeg vervolgens een functie `void print_full_game(struct game *game)` toe aan `u
 
 Gebruik `print_full_game` met het resultaat van `solve_seed` om het resultaat van je auto-solver te printen.
 
+> :warning: `print_full_game` mag het spel niet aanpassen of spelen. Een oproep naar `print_full_game` mag er nooit toe leiden dat het spel zich nadien in een andere toestand bevindt. Print functies in het algemeen mogen hun parameters niet aanpassen. Stel je voor dat `printf` de waarden van meegegeven variabelen zou wijzigen, dat zou niet erg handig zijn.
+
+> :warning: `print_full_game` moet werken voor eender welk geldig spel. Dit kan een spel zijn dat net gestart is met maar 1 toestand, of een volledig uitgespeeld spel, of alles daartussen.
+
 #### Hints
 
 * BinarySweeper gebruikt intern een [*doubly linked list*](https://en.wikipedia.org/wiki/Doubly_linked_list) van `struct history_element`s. Elk history element bevat 1 state. Dit biedt ons de mogelijkheid undo en redo-functionaliteit te implementeren.
