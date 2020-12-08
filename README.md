@@ -622,7 +622,7 @@ Met undo kan je het gehele spel terugspoelen naar de initiële state.
 > :information_source: Merk op dat de seed telkens als 0 wordt weergegeven. Dit doen we omdat we de seed niet bewaren in een bestand en dus onmogelijk kunnen achterhalen op basis van een save file.
 
 > :information_source: Het kan interessant zijn om eens willekeurige bestanden (geen save files) mee te geven aan de `cli`.
-> Aangezien we op geen enkele manier controleren of de bestanden wel geldige spellen voorstellen, zal onze `cli` de files toch interpreteren als binarysweeper spellen. Kan je de vreemde spellen die je te zien krijgt verklaren? Dit is nog maar eens een voorbeeld dat de manier waarop je data interpreteert bepaald wat de betekenis is van deze data.
+> Aangezien we op geen enkele manier controleren of de bestanden wel geldige spellen voorstellen, zal onze `cli` de files toch interpreteren als binarysweeper spellen. Kan je de vreemde spellen die je te zien krijgt verklaren? Dit is nog maar eens een voorbeeld dat de manier waarop je data interpreteert, bepaalt wat de betekenis is van deze data.
 
 > :information_source: Misschien is het je opgevallen dat de bytes van elke `uint64_t` van rechts naar links geschreven worden naar het bestand.
 > Het getal `0x1` als 64-bit getal wordt `01 00 00 00 00 00 00 00` wanneer we het byte per byte naar een bestand schrijven.
