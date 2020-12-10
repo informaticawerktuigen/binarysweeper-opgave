@@ -454,6 +454,8 @@ Wanneer je de functie oproept zou dus het volledige spelverloop moeten geprint w
 
 > :warning: Het is niet de bedoeling dat je user input vraagt om het spel te spelen. Je functie moet volledig zelfstandig alle zetten uitvoeren om het spel correct op te lossen.
 
+> :warning: Speel het spel met de interface in `game.h`, niet met de interface in `state.h`.
+
 #### Hints
 
 * Je kan gebruik maken van de functie `print_game_state` in `include/state.h` om een state van een spel te printen.
